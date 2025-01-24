@@ -9,17 +9,20 @@ from math import log10
 def primes() -> Generator[int, None, None]:
     with open('primes.txt', 'r') as file:
         for line in file.readlines():
-            yield int(line)
+            p = int(line)
+            if p < 1e10 and p % 10 == 1:
+                yield p
 
 
-def performance_test(exponent=100):
+def performance_test():
     naive = []
     sq_mult = []
     for p in primes():
-        base = (p - 10000) % p
+        exponent = randint(1, p)
+        base = 100
         print(p, base)
-        naive.append([log10(p), timeit(lambda: naive_exponentiate(exponent, base, p), number=100)])
-        sq_mult.append([log10(p), timeit(lambda: exponentiate(exponent, base, p), number=100)])
+        naive.append([log10(p), log10(timeit(lambda: naive_exponentiate(exponent, base, p), number=1))])
+        sq_mult.append([log10(p), log10(timeit(lambda: exponentiate(exponent, base, p), number=1))])
     naive = np.array(naive).T
     sq_mult = np.array(sq_mult).T
 
@@ -31,7 +34,7 @@ def performance_test(exponent=100):
 
     # Add labels and title
     plt.xlabel('log p')
-    plt.ylabel('Time (s)')
+    plt.ylabel('log Time (s)')
     plt.title('Comparison between Naive exponentiation and "square and multiply"')
 
     # Add a legend

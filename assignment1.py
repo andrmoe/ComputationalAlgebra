@@ -40,9 +40,10 @@ def naive_exponentiate(exponent: int, base: int, p: int) -> int:
     if exponent < 0:
         base_inverse = inverse(base, p)
         return exponentiate(-exponent, base_inverse, p)
-    if exponent == 0:
-        return 1
-    return mul(base,naive_exponentiate(exponent-1, base, p), p)
+    result = 1
+    for _ in range(exponent):
+        result = mul(result, base, p)
+    return result
 
 
 def exponentiate(exponent: int, base: int, p: int) -> int:

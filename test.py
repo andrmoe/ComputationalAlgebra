@@ -1,4 +1,4 @@
-from assignment1 import add, sub, mul, extended_euclidean, inverse, exponentiate
+from assignment1 import add, sub, mul, extended_euclidean, inverse, exponentiate, naive_exponentiate
 
 
 def test_add():
@@ -20,6 +20,8 @@ def test_inverse():
 
 def test_exponentiate():
     assert exponentiate(4, 3, 11) == 4
+    assert naive_exponentiate(4, 3, 11) == 4
 
 def test_negative_exponentiate():
     assert exponentiate(-4, 3, 11) == 3
+    assert naive_exponentiate(-4, 3, 11) == 3
