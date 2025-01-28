@@ -1,4 +1,4 @@
-
+import numpy as np
 
 def exponentiate(exponent: int, base: int, p: int) -> int:
     """
@@ -22,7 +22,12 @@ def fermat_test(p: int) -> bool:
     return all([result == 1 for result in test_results])
 
 
-for i in range(1, 200):
-    if fermat_test(i):
-        print(i)
+# for i in range(1, 200):
+#     if fermat_test(i):
+#         print(i)
 
+def prime_count_estimate(n: int) -> float:
+    return (2**n)/(np.log(2)*n)
+
+for n in range(4, 8):
+    print(n, prime_count_estimate(n))
