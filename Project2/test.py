@@ -1,8 +1,9 @@
-from prime import exponentiate, fermat_test, find_prime
+from prime import exponentiate, fermat_test, trial_division_test, find_prime, find_prime_trial_division
 
 
 def test_exponentiate():
     assert exponentiate(4, 3, 11) == 4
+
 
 def test_primality_test():
     primes = [
@@ -25,21 +26,26 @@ def test_primality_test():
         98648327273927255574628233153643703452210677368491**2*37951708187165715603344328825183215474844072816757**2
     ]
 
-    carmichael_numbers = [
-        41041, 62745, 63973, 75361, 101101, 126217, 172081, 188461, 278545, 340561, 449065, 552721, 656601, 658801,
-        670033, 748657, 838201, 852841, 997633, 1033669, 1082809, 1569457, 1773289, 2100901, 2113921, 2433601, 2455921
-    ]
+    # carmichael_numbers = [
+    #     41041, 62745, 63973, 75361, 101101, 126217, 172081, 188461, 278545, 340561, 449065, 552721, 656601, 658801,
+    #     670033, 748657, 838201, 852841, 997633, 1033669, 1082809, 1569457, 1773289, 2100901, 2113921, 2433601, 2455921
+    # ]
 
     for prime in primes:
         assert fermat_test(prime)
+        assert trial_division_test(prime)
 
     for composite in composites:
         assert not fermat_test(composite)
+        assert not trial_division_test(composite)
 
-    for carmichael_number in carmichael_numbers: ...
-        #assert fermat_test(carmichael_number)
 
 def test_find_prime():
-    for _ in range(5):
-        prime = find_prime(200)
+    n = 200
+    for _ in range(3):
+        prime = find_prime(n)
+        assert (1 << n) <= prime < (1 << (n+1))
+        assert fermat_test(prime)
+        prime = find_prime_trial_division(n)
+        assert (1 << n) <= prime < (1 << (n+1))
         assert fermat_test(prime)
