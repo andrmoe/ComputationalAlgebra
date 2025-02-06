@@ -1,4 +1,5 @@
 from random import randint
+import numpy as np
 
 def exponentiate(exponent: int, base: int, p: int) -> int:
     """
@@ -32,3 +33,7 @@ def find_prime(n: int) -> int:
     while not fermat_test(prime_candidate):
         prime_candidate = randint(1 << n, (1 << (n+1))-1)
     return prime_candidate
+
+
+def prime_count_estimate(n: int) -> float:
+    return (2**n)/(np.log(2)*n)
