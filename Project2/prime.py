@@ -58,3 +58,22 @@ def find_prime_trial_division(n: int) -> int:
 
 def prime_count_estimate(n: int) -> float:
     return (2 ** n) / (np.log(2) * n)
+
+
+def prime_sieve(n_min, n_max, sieve_size=10) -> [int]:
+    """
+    :param n_min: Start of sieve range (inclusive)
+    :param n_max: End of sieve range (exclusive)
+    :param sieve_size: How many primes should be used
+    :return: A list of prime candidates
+    """
+    numbers = list(range(n_min, n_max))
+    for prime in small_primes[:sieve_size]:
+        m = ((n_min + prime - 1) // prime) * prime  # Smallest multiple m of prime st. m >= n_min
+        if m == prime:  # We only want to sieve out m if it is a composite number
+            m += prime
+        while m < n_max:
+            numbers[m - n_min] = None
+            m += prime
+    return [n for n in numbers if n is not None]
+
