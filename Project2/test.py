@@ -42,7 +42,9 @@ def test_prime_sieve():
     large_num = 1 << 300
     range_size = 1000
     sieved_primes = prime_sieve(large_num, large_num + range_size)
-    assert len(sieved_primes) < range_size // 2  # Make sure that sieve actually useful
-    for num in range(large_num, large_num + range_size):  # Making sure that the sieve is not filtering out primes
+    # Make sure that sieve actually useful
+    assert len(sieved_primes) < range_size // 2
+    # Making sure that the sieve is not filtering out primes
+    for num in range(large_num, large_num + range_size):
         if num not in sieved_primes:
             assert not fermat_test(num)

@@ -75,8 +75,10 @@ def prime_sieve(n_min: int, n_max: int, sieve_size=10) -> [int]:
     """
     numbers = list(range(n_min, n_max))
     for prime in small_primes[:sieve_size]:
-        m = ((n_min + prime - 1) // prime) * prime  # Smallest multiple m of prime st. m >= n_min
-        if m == prime:  # We only want to sieve out m if it is a composite number
+        # Smallest multiple m of prime st. m >= n_min
+        m = ((n_min + prime - 1) // prime) * prime
+        # We only want to sieve out m if it is a composite number
+        if m == prime:
             m += prime
         while m < n_max:
             numbers[m - n_min] = None
