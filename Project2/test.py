@@ -1,5 +1,10 @@
 from prime import *
 from precomputed_numbers import primes, composites
+"""
+I'm using pytest as my test framework. It automatically runs all functions starting with "test".
+You can install pytest with "pip install pytest".
+You can run all tests with "pytest test.py" in the terminal.
+"""
 
 
 def test_exponentiate():
