@@ -1,4 +1,4 @@
-from prime import exponentiate, fermat_test, trial_division_test, find_prime, find_prime_trial_division, prime_sieve
+from prime import *
 from precomputed_numbers import primes, composites
 
 
@@ -19,12 +19,15 @@ def test_primality_test():
 
 def test_find_prime():
     n = 200
-    for _ in range(3):
+    for _ in range(10):
         prime = find_prime(n)
         assert (1 << n) <= prime < (1 << (n+1))
         assert fermat_test(prime)
         prime = find_prime_trial_division(n)
         assert (1 << n) <= prime < (1 << (n+1))
+        assert fermat_test(prime)
+        prime = find_prime_sieve(1 << n, (1 << n) + 1000)
+        assert (1 << n) <= prime < (1 << n) + 1000
         assert fermat_test(prime)
 
 

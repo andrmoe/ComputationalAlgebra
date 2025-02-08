@@ -1,6 +1,6 @@
 from random import randint
 import numpy as np
-from typing import Generator, Callable
+from typing import Generator, Callable, Iterator, Iterable
 from precomputed_numbers import small_primes
 
 
@@ -27,16 +27,22 @@ def fermat_test(p: int) -> bool:
     return all([result == 1 for result in test_results])
 
 
+def find_prime_generic(candidates: Iterator[int], test) -> int:
+    while True:
+        prime_candidate = next(candidates)
+        if test(prime_candidate):
+            return prime_candidate
+
 def find_prime(n: int, test: Callable[[int], bool] = fermat_test) -> int:
     """
     :param n Length of the binary representation of the prime
     :param test Prime testing function
     :return A prime in the range [2^n, 2^(n+1)-1]
     """
-    prime_candidate = 4
-    while not test(prime_candidate):
-        prime_candidate = randint(1 << n, (1 << (n + 1)) - 1)
-    return prime_candidate
+    def random_number_gen() -> Iterator[int]:
+        while True:
+            yield randint(1 << n, (1 << (n + 1)) - 1)
+    return find_prime_generic(random_number_gen(), test)
 
 
 def generate_small_primes(n: int) -> Generator[int, None, None]:
@@ -60,7 +66,7 @@ def prime_count_estimate(n: int) -> float:
     return (2 ** n) / (np.log(2) * n)
 
 
-def prime_sieve(n_min, n_max, sieve_size=10) -> [int]:
+def prime_sieve(n_min: int, n_max: int, sieve_size=10) -> [int]:
     """
     :param n_min: Start of sieve range (inclusive)
     :param n_max: End of sieve range (exclusive)
@@ -77,3 +83,6 @@ def prime_sieve(n_min, n_max, sieve_size=10) -> [int]:
             m += prime
     return [n for n in numbers if n is not None]
 
+
+def find_prime_sieve(n_min: int, n_max: int, sieve_size: int = 10,  test=fermat_test) -> int:
+    return find_prime_generic(iter(prime_sieve(n_min, n_max, sieve_size)), test)
