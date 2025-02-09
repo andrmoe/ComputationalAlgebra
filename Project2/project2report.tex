@@ -47,12 +47,27 @@
 Define \(S_n = \{2^n, 2^n+1, ... , 2^{n+1}-1\}\)
 \begin{enumerate}[a)]
     \item 
+    Let \(X\) be a uniform random variable over \(S_n\).
+    \[
+    Let\ p = P(X\ is\ a\ prime) = \frac{number\ of\ primes\ in\ S_n}{|s_n|}
+    = \frac{\pi(2^{n+1}-1) - \pi(2^n-1)}{2^n} \]
+    \[\approx 
+    2^{-n}\left(\frac{2^{n+1}}{log(2^{n+1})}-\frac{2^n}{log(2^n)}\right)
+    = \frac{2}{(n+1)\ log\ 2}-\frac{1}{n\ log\ 2}
+    = \frac{2n - (n+1)}{(n+1)n\ log\ 2}
+    \]
+    \[
+    \approx \frac{1}{n\ log 2}
+    \]
+    We are interested in the expected number of candidates that must be tested before a prime is found. The number of failed candidates follows a negative binomial distribution with one success (r=1). The expected number of trials to see \(r\) successes in a negative binomial distribution is \(\frac{r}{p} = \frac{1}{p}\) in our case.
+    The expected number of trials is therefore \(\approx \mathbf{n\ log\ 2}\).
 \end{enumerate}
 
 \section*{Task 2, Practice}
 
 \begin{enumerate}[a)]
     \item 
+
 \end{enumerate}
 
 \begin{figure}[htbp]
@@ -65,8 +80,8 @@ Define \(S_n = \{2^n, 2^n+1, ... , 2^{n+1}-1\}\)
 \begin{appendix}
 \section*{Appendix}
     Code is available at https://github.com/andrmoe/ComputationalAlgebra
-    \lstinputlisting[language=Python, caption={prime.py}, label={lst:python_code}]{prime.py}
-    \lstinputlisting[language=Python, caption={test.py}, label={lst:python_code}]{test.py}
+    \lstinputlisting[language=Python, caption={prime.py}, label={lst:python_code1}]{prime.py}
+    \lstinputlisting[language=Python, caption={test.py}, label={lst:python_code2}]{test.py}
 \end{appendix}
 
 \end{document}
