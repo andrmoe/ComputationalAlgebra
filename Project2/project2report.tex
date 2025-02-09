@@ -9,6 +9,7 @@
 \usepackage{xcolor}
 \usepackage{float}
 \usepackage{booktabs}
+\usepackage{calc}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.4,0.4,0.4}
@@ -122,8 +123,48 @@ Define \(S_n = \{2^n, 2^n+1, ... , 2^{n+1}-1\}\)
 \section*{Task 2, Practice}
 
 \begin{enumerate}[a)]
+    \setlength{\itemsep}{10pt}
     \item
-    \lstinputlisting[language=Python, caption={fermat test}, label={lst:fermattest}]{temp/temp_fermat_test.py}
+    The Fermat test works by selecting a random number and checking if Fermat's little theorem holds.
+    The algorithm returns composite (False) if it doesn't hold, then repeats this 100 times.
+    If the theorem holds for all 100 tests, the algorithm concludes that \(p\) is probably prime and returns True.
+    \vspace{20pt}
+    \lstinputlisting[language=Python, caption={Fermat test}, label={lst:fermattest}]{temp/fermat_test.py}
+    \item
+    A generic prime finding algorithm takes a stream of prime candidates and prime test.
+    It tests each candidate, and returns the first prime it finds.
+    \lstinputlisting[language=Python, caption={Generic prime test}, label={lst:findprimegeneric}]{temp/find_prime_generic.py}
+    \vspace{20pt}
+    This algorithm samples candidates from \(S_n\) as a stream of candidates.
+    \lstinputlisting[language=Python, caption={Basic prime finder}, label={lst:findprime}]{temp/find_prime.py}
+    \item
+    This prime test works by iterating through a list of precomputed small primes.
+    The list is part of the file precomputed\_numbers.py and consists of all primes, smaller than 10000.
+    If the candidate is divisible by a precomputed prime (and it's not equal to the prime), it returns composite.
+    If the candidate is not divisible by any of the precomputed primes, a Fermat test is run to make a final decision.
+    \lstinputlisting[language=Python, caption={Trial division test}, label={lst:trialdivisiontest}]{temp/trial_division_test.py}
+    \item
+    The prime sieve constructs a list of prime candidates, by starting with a list of consecutive integers from
+    \(n_{min}\) to \(n_{max}\) (exclusive).
+    Then it removes all numbers that are divisible by a small precomputed prime \(p\).
+    It starts by finding the smallest number \(m\) in the range that is divisible \(p\), then skips \(p\) indices ahead
+    again and again until it reaches the end of the range.
+    If \(m = p\), then \(m\) is not removed, since it's prime, but all subsequent multiples are removed.
+    This process is repeated for as many small primes as specified.
+
+    \(m\) is computed like this:
+    \[m = \left\lfloor \frac{n_{min}-1}{p} + 1 \right\rfloor \cdot p\]
+    \lstinputlisting[language=Python, caption={Sieve prime finder}, label={lst:sieve}]{temp/prime_sieve.py}
+    To see why the formula for \(m\) works, let \(c\) be such that:
+    \[m = \left( \frac{n_{min}-1}{p} + 1 - c \right) \cdot p\]
+    It is clear that \(c \in [0, 1)\).
+    \[m = n_{min} - 1 + p - cp > n_{min} - 1 + p - p = n_{min} - 1 \Rightarrow m \geq n_{min}\]
+    Also:
+    \[m - p = n_{min} - 1 - cp \leq n_{min} - 1 \Rightarrow m - p < n_{min}\]
+    This shows that \(m\) is the smallest multiple of \(p\), that is greater than \(n_{min}\).
+
+    \item
+
 
 \end{enumerate}
 

@@ -29,7 +29,7 @@ def fermat_test(p: int) -> bool:
     return True
 
 
-def find_prime_generic(candidates: Iterator[int], test) -> int:
+def find_prime_generic(candidates: Iterator[int], test: Callable[[int], bool]) -> int:
     while True:
         prime_candidate = next(candidates)
         if test(prime_candidate):
@@ -57,18 +57,17 @@ def generate_small_primes(n: int) -> Generator[int, None, None]:
 
 
 def trial_division_test(n: int) -> bool:
-    return (all([n % p != 0 for p in small_primes]) or n in small_primes) and fermat_test(n)
+    for p in small_primes:
+        if n % p == 0 and n != p:
+            return False
+    return fermat_test(n)
 
 
 def find_prime_trial_division(n: int) -> int:
     return find_prime(n, test=trial_division_test)
 
 
-def prime_count_estimate(n: int) -> float:
-    return (2 ** n) / (np.log(2) * n)
-
-
-def prime_sieve(n_min: int, n_max: int, sieve_size=10) -> [int]:
+def prime_sieve(n_min: int, n_max: int, sieve_size: int = 10) -> [int]:
     """
     :param n_min: Start of sieve range (inclusive)
     :param n_max: End of sieve range (exclusive)
@@ -78,7 +77,7 @@ def prime_sieve(n_min: int, n_max: int, sieve_size=10) -> [int]:
     numbers = list(range(n_min, n_max))
     for prime in small_primes[:sieve_size]:
         # Smallest multiple m of prime st. m >= n_min
-        m = ((n_min + prime - 1) // prime) * prime
+        m = ((n_min - 1) // prime + 1) * prime
         # We only want to sieve out m if it is a composite number
         if m == prime:
             m += prime
