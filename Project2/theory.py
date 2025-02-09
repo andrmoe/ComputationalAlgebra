@@ -4,7 +4,7 @@ import numpy as np
 ns = [10, 50, 100, 500, 1000]
 data = {
     "n": ns,
-    "Candidates": [np.log(n) for n in ns]
+    "Candidates": [n*np.log(2) for n in ns]
 }
 
 df = pd.DataFrame(data)
