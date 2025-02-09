@@ -50,24 +50,27 @@ Define \(S_n = \{2^n, 2^n+1, ... , 2^{n+1}-1\}\)
 \begin{enumerate}[a)]
     \item 
     Let \(X\) be a uniform random variable over \(S_n\).
-    \[
-    Let\ p = P(X\ is\ a\ prime) = \frac{number\ of\ primes\ in\ S_n}{|s_n|}
-    = \frac{\pi(2^{n+1}-1) - \pi(2^n-1)}{2^n} \]
-    \[\approx 
-    2^{-n}\left(\frac{2^{n+1}}{log(2^{n+1})}-\frac{2^n}{log(2^n)}\right)
-    = \frac{2}{(n+1)\ log\ 2}-\frac{1}{n\ log\ 2}
-    = \frac{2n - (n+1)}{(n+1)n\ log\ 2}
-    \]
-    \[
-    \approx \frac{1}{n\ log 2}
-    \]
+    \begin{equation}
+        Let\ p = P(X\ is\ a\ prime) = \frac{number\ of\ primes\ in\ S_n}{|S_n|}
+        = \frac{\pi(2^{n+1}-1) - \pi(2^n-1)}{2^n}
+    \end{equation}
+
+    \begin{equation}
+        \approx 2^{-n}\left(\frac{2^{n+1}}{log(2^{n+1})}-\frac{2^n}{log(2^n)}\right)
+        = \frac{2}{(n+1)\ log\ 2}-\frac{1}{n\ log\ 2}
+        = \frac{2n - (n+1)}{(n+1)n\ log\ 2}
+        \approx \frac{1}{n\ log 2}
+    \end{equation}
     We are interested in the expected number of candidates that must be tested before a prime is found. The number of failed candidates follows a negative binomial distribution with one success (r=1). The expected number of trials to see \(r\) successes in a negative binomial distribution is \(\frac{r}{p} = \frac{1}{p}\) in our case.
     The expected number of trials is therefore \(\approx \mathbf{n\ log\ 2}\).
     The table below shows this approximation for several values of \(n\).
+        {\begin{table}[H]
+             \centering
+             \caption{Expected Number of Prime Candidates}
+             \label{tab:table}
+             \input{prime_trial_table}
 
-    \begin{table}[H]
-        \input{table.tex}
-    \end{table}
+    \end{table}}
 
     \end{enumerate}
 
@@ -78,12 +81,6 @@ Define \(S_n = \{2^n, 2^n+1, ... , 2^{n+1}-1\}\)
 
 \end{enumerate}
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\linewidth]{plot_2025-01-24 14-39-00_0.png}
-    \caption{Measurements}
-    \label{figure1}
-\end{figure}
 \newpage
 \begin{appendix}
 \section*{Appendix}

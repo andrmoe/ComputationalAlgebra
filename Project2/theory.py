@@ -10,7 +10,9 @@ def generate_data_for_1a():
     }
 
     df = pd.DataFrame(data)
-    latex_table = df.to_latex(index=False, label="tab:exp_candidates")
+    latex_table = df.to_latex(index=False)
 
-    with open("table.tex", "w") as f:
+    with open("prime_trial_table.tex", "w") as f:
         f.write(latex_table)
+
+generate_data_for_1a()
