@@ -22,9 +22,11 @@ def exponentiate(exponent: int, base: int, p: int) -> int:
 
 
 def fermat_test(p: int) -> bool:
-    test_numbers = range(1, min(p, 100))
-    test_results = [exponentiate(p - 1, a, p) for a in test_numbers]
-    return all([result == 1 for result in test_results])
+    for _ in range(100):
+        a = randint(2, p - 2)
+        if exponentiate(p - 1, a, p) != 1:
+            return False
+    return True
 
 
 def find_prime_generic(candidates: Iterator[int], test) -> int:

@@ -14,7 +14,7 @@ def generate_data_1a():
     df = pd.DataFrame(data)
     latex_table = df.to_latex(index=False)
 
-    with open("prime_trial_table.tex", "w") as f:
+    with open("temp/prime_trial_table.tex", "w") as f:
         f.write(latex_table)
 
 def generate_data_1b():
@@ -27,5 +27,5 @@ def generate_data_1b():
     df = pd.DataFrame(data)
     latex_table = df.to_latex(index=False)
 
-    with open("range_size_table.tex", "w") as f:
+    with open("temp/range_size_table.tex", "w") as f:
         f.write(latex_table)

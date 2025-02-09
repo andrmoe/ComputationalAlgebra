@@ -11,7 +11,7 @@
 \usepackage{booktabs}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codegray}{rgb}{0.4,0.4,0.4}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
 
@@ -67,7 +67,7 @@ Define \(S_n = \{2^n, 2^n+1, ... , 2^{n+1}-1\}\)
              \centering
              \caption{Expected Number of Prime Candidates}
              \label{tab:exp_prime_candidates}
-             \input{prime_trial_table}
+             \input{temp/prime_trial_table}
         \end{table}}
 
     \item
@@ -99,7 +99,7 @@ Define \(S_n = \{2^n, 2^n+1, ... , 2^{n+1}-1\}\)
              \centering
              \caption{Lower bounds on range size}
              \label{tab:lower_bounds_for_d}
-             \input{range_size_table}
+             \input{temp/range_size_table}
         \end{table}}
 
     The probability of picking a range with at least one prime, if we use the suggested range size \(d\) from above,
@@ -122,7 +122,8 @@ Define \(S_n = \{2^n, 2^n+1, ... , 2^{n+1}-1\}\)
 \section*{Task 2, Practice}
 
 \begin{enumerate}[a)]
-    \item 
+    \item
+    \lstinputlisting[language=Python, caption={fermat test}, label={lst:fermattest}]{temp/temp_fermat_test.py}
 
 \end{enumerate}
 
