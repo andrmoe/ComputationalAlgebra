@@ -48,18 +48,16 @@
 \section*{Task 1, Theory}
 Define \(S_n = \{2^n, 2^n+1, ... , 2^{n+1}-1\}\)
 \begin{enumerate}[a)]
-    \item 
+    \item
     Let \(X\) be a uniform random variable over \(S_n\).
-    \[
+    \begin{gather*}
         Let\ p = P(X\ is\ a\ prime) = \frac{number\ of\ primes\ in\ S_n}{|S_n|}
-        = \frac{\pi(2^{n+1}-1) - \pi(2^n-1)}{2^n}
-    \[
-    \]
+        = \frac{\pi(2^{n+1}-1) - \pi(2^n-1)}{2^n}\\
         \approx 2^{-n}\left(\frac{2^{n+1}}{log(2^{n+1})}-\frac{2^n}{log(2^n)}\right)
         = \frac{2}{(n+1)\ log\ 2}-\frac{1}{n\ log\ 2}
         = \frac{2n - (n+1)}{(n+1)n\ log\ 2}
-        \approx \frac{1}{n\ log 2}
-    \]
+        \approx \frac{1}{n\ log 2}\\
+    \end{gather*}
 
     \vspace{20pt}
     We are interested in the expected number of candidates that must be tested before a prime is found. The number of failed candidates follows a negative binomial distribution with one success (r=1). The expected number of trials to see \(r\) successes in a negative binomial distribution is \(\frac{r}{p} = \frac{1}{p}\) in our case.
@@ -68,10 +66,56 @@ Define \(S_n = \{2^n, 2^n+1, ... , 2^{n+1}-1\}\)
         {\begin{table}[H]
              \centering
              \caption{Expected Number of Prime Candidates}
-             \label{tab:table}
+             \label{tab:exp_prime_candidates}
              \input{prime_trial_table}
+        \end{table}}
 
-    \end{table}}
+    \item
+    Let \(A = \{a, a+1, ... , a + d - 1\}\) where \(a\) is selected at random from \(S_n\).
+    We will assume that \(A \subset S_n\).
+
+    We want to estimate the probability that \(A\) contains at least one prime.
+
+    \begin{gather*}
+        P(A\ contains\ at\ least\ one\ prime) = 1 - P(A\ contains\ no\ primes)\\
+        P(A\ contains\ no\ primes) \approx (1-p)^d = \left(1-\frac{1}{n\ log\ 2}\right)^d
+    \end{gather*}
+
+    We'll demand that \(P(A\ contains\ no\ primes) < q = 0.01\)
+    \begin{gather*}
+        \left(1-\frac{1}{n\ log\ 2}\right)^d < q \\
+        d \cdot log\left(1-\frac{1}{n\ log\ 2}\right) < log\ q \\
+        d > \frac{log\ q}{log\left(1-\frac{1}{n\ log\ 2}\right)} =
+        \frac{log\ q}{log\left(\frac{(n\ log\ 2) - 1}{n\ log\ 2}\right)} =
+        \frac{log\ q}{log\left(\frac{n - 1/log(2)}{n}\right)} =
+        \frac{log\ q}{log(n - \frac{1}{log\ 2}) - log(n))} \\
+        \approx \frac{log\ q}{\left(-\frac{1}{log\ 2}\right) \cdot log'(n)} =
+        \frac{- log\ q}{\frac{1}{log\ 2} \cdot \frac{1}{n}} =
+        n \cdot log\ 2 \cdot log\left( \frac{1}{q} \right)
+    \end{gather*}
+    Setting \(q = 0.01\) then gives us that \(\mathbf{d > 3.19n}\).
+    The table below shows lower bounds on d for several values of \(n\).
+        {\begin{table}[H]
+             \centering
+             \caption{Lower bounds on range size}
+             \label{tab:lower_bounds_for_d}
+             \input{range_size_table}
+        \end{table}}
+
+    The probability of picking a range with at least one prime, if we use the suggested range size \(d\) from above,
+    is over \(\mathbf{99\%}\).
+
+    In the case of a), every prime number is equally likely to be picked.
+    The distribution of the prime numbers that are found is therefore identical to the distribution of primes in
+    \(S_n\).
+    And the prime number theorem tells us that there are more primes in the first half of \(S_n\) than the second.
+
+    The primes that are found in b), however, are very close to \(a\).
+    Which is a uniformly distributed random variable.
+    The primes that are found, will therefore also be uniformly distributed.
+
+    \item
+
 
     \end{enumerate}
 
