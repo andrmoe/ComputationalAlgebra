@@ -47,7 +47,7 @@
 \maketitle
 
 \section*{Task 1, Theory}
-Define \(S_n = \{2^n, 2^n+1, ... , 2^{n+1}-1\}\)
+Define \(S_n = \{2^n, 2^n+1, \dots , 2^{n+1}-1\}\)
 \begin{enumerate}[a)]
     \item
     Let \(X\) be a uniform random variable over \(S_n\).
@@ -62,7 +62,7 @@ Define \(S_n = \{2^n, 2^n+1, ... , 2^{n+1}-1\}\)
 
     \vspace{20pt}
     We are interested in the expected number of candidates that must be tested before a prime is found. The number of failed candidates follows a negative binomial distribution with one success (r=1). The expected number of trials to see \(r\) successes in a negative binomial distribution is \(\frac{r}{p} = \frac{1}{p}\) in our case.
-    The expected number of trials is therefore \(\approx \mathbf{n\ log\ 2}\).
+    The expected number of trials is therefore \(\approx \mathbf{n\ \log\ 2}\).
     The table below shows this approximation for several values of \(n\).
         {\begin{table}[H]
              \centering
@@ -72,7 +72,7 @@ Define \(S_n = \{2^n, 2^n+1, ... , 2^{n+1}-1\}\)
         \end{table}}
 
     \item
-    Let \(A = \{a, a+1, ... , a + d - 1\}\) where \(a\) is selected at random from \(S_n\).
+    Let \(A = \{a, a+1, \dots , a + d - 1\}\) where \(a\) is selected at random from \(S_n\).
     We will assume that \(A \subset S_n\).
 
     We want to estimate the probability that \(A\) contains at least one prime.
@@ -116,8 +116,29 @@ Define \(S_n = \{2^n, 2^n+1, ... , 2^{n+1}-1\}\)
     The primes that are found, will therefore also be uniformly distributed.
 
     \item
-
-
+    Let \(A\) be the same as before. And define \(A_i\) to be what remains after filtering out numbers that are
+    divisible by the \(i\) smallest primes. Where the \(i\) smallest primes are denoted \(p_1, p_2, \dots , p_i\).
+    \begin{gather*}
+        |A_i| \approx \left( 1 - \frac{1}{p_i} \right)\\
+        |A_i| \approx \prod_{j=1}^{i}\left( 1 - \frac{1}{p_i} \right)|A| =
+    \prod_{j=1}^{i}\left( 1 - \frac{1}{p_i} \right)d\\
+    \end{gather*}
+    The number of primes in \(A_i\) is the same as in \(A\).
+    The probability that an element in \(A_i\) is prime is therefore:
+    \begin{gather*}
+        p_i = \frac{number\ of\ primes\ in\ A}{|A_i|} \approx \frac{pd}{\prod_{j=1}^{i}\left( 1 - \frac{1}{p_i} \right)d}\\
+        = \frac{1}{(n\ \log\ 2)\prod_{j=1}^{i}\left( 1 - \frac{1}{p_i} \right)}\\
+    \end{gather*}
+    We can substitute \(n \Longrightarrow n\prod_{j=1}^{i}\left( 1 - \frac{1}{p_i} \right)\) in c) to obtain a value
+    for d, where we'll be 99\% sure that we will find a prime.
+    \[d_i > 3.19n\prod_{j=1}^{i}\left( 1 - \frac{1}{p_i} \right)\]
+    The table below shows lower bounds on d for several values of \(n\). \(d_0 = d\)
+        {\begin{table}[H]
+             \centering
+             \caption{Lower bounds on range size, sieved}
+             \label{tab:sievedlowerbounds}
+             \input{temp/sieve_table}
+        \end{table}}
     \end{enumerate}
 
 \section*{Task 2, Practice}
@@ -131,7 +152,7 @@ Define \(S_n = \{2^n, 2^n+1, ... , 2^{n+1}-1\}\)
     \vspace{20pt}
     \lstinputlisting[language=Python, caption={Fermat test}, label={lst:fermattest}]{temp/fermat_test.py}
     \item
-    A generic prime finding algorithm takes a stream of prime candidates and prime test.
+    A generic prime finding algorithm takes a stream of prime candidates and a prime test.
     It tests each candidate, and returns the first prime it finds.
     \lstinputlisting[language=Python, caption={Generic prime test}, label={lst:findprimegeneric}]{temp/find_prime_generic.py}
     \vspace{20pt}
