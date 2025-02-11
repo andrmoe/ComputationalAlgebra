@@ -1,5 +1,4 @@
 from random import randint
-import numpy as np
 from typing import Generator, Callable, Iterator, Iterable
 from precomputed_numbers import small_primes
 
@@ -35,15 +34,18 @@ def find_prime_generic(candidates: Iterator[int], test: Callable[[int], bool]) -
         if test(prime_candidate):
             return prime_candidate
 
-def find_prime(n: int, test: Callable[[int], bool] = fermat_test) -> int:
+
+def find_prime(n_min: int, n_max: int, test: Callable[[int], bool] = fermat_test) -> int:
     """
-    :param n Length of the binary representation of the prime
+    To solve the task: pass in n_min = 1 << n, n_max = (1 << (n + 1))
+    :param n_min Lower bound of search range
+    :param n_max Upper bound of search range (exclusive)
     :param test Prime testing function
     :return A prime in the range [2^n, 2^(n+1)-1]
     """
     def random_number_gen() -> Iterator[int]:
         while True:
-            yield randint(1 << n, (1 << (n + 1)) - 1)
+            yield randint(n_min, n_max - 1)
     return find_prime_generic(random_number_gen(), test)
 
 
@@ -63,8 +65,8 @@ def trial_division_test(n: int) -> bool:
     return fermat_test(n)
 
 
-def find_prime_trial_division(n: int) -> int:
-    return find_prime(n, test=trial_division_test)
+def find_prime_trial_division(n_min: int, n_max: int) -> int:
+    return find_prime(n_min, n_max, test=trial_division_test)
 
 
 def prime_sieve(n_min: int, n_max: int, sieve_size: int = 10) -> [int]:

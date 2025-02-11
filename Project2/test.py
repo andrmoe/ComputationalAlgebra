@@ -23,16 +23,17 @@ def test_primality_test():
 
 
 def test_find_prime():
-    n = 200
+    n_min = 1 << 500
+    n_max = n_min + 1000
     for _ in range(10):
-        prime = find_prime(n)
-        assert (1 << n) <= prime < (1 << (n+1))
+        prime = find_prime(n_min, n_max)
+        assert n_min <= prime < n_max
         assert fermat_test(prime)
-        prime = find_prime_trial_division(n)
-        assert (1 << n) <= prime < (1 << (n+1))
+        prime = find_prime_trial_division(n_min, n_max)
+        assert n_min <= prime < n_max
         assert fermat_test(prime)
-        prime = find_prime_sieve(1 << n, (1 << n) + 1000)
-        assert (1 << n) <= prime < (1 << n) + 1000
+        prime = find_prime_sieve(n_min, n_max)
+        assert n_min <= prime < n_max
         assert fermat_test(prime)
 
 
