@@ -1,6 +1,14 @@
 import numpy as np
 
 
+def gram_schmidt_basis(basis: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    q, r = np.linalg.qr(basis)
+    # Applying diag twice results in a matrix with only the diagonal elements from r
+    gs_basis = np.diag(np.diag(r)).dot(q)
+    gs_r = np.diag(1/np.diag(r)).dot(r)
+    return gs_basis, gs_r
+
+
 def search_bounds(i: int, a: np.ndarray[np.int64], R: np.ndarray[np.float64], A: float) -> np.ndarray:
     abs_Rii = abs(R[i,i])
     if i == a.shape[0] - 1:
@@ -25,4 +33,4 @@ def search_smallest_vector(basis: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     print(a)
     print(search_bounds(basis.shape[1] - 2, a, R, base_A))
 
-search_smallest_vector(np.random.random((4, 4)))
+#search_smallest_vector(np.random.random((4, 4)))
