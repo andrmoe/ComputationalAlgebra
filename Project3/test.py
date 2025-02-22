@@ -1,4 +1,4 @@
-from lattice_search import gram_schmidt_basis
+from lattice_search import gram_schmidt_basis, search_smallest_vector
 import numpy as np
 
 
@@ -15,4 +15,9 @@ def test_gram_schmidt_basis():
                 assert abs(np.dot(u, v)/(np.linalg.norm(u)*np.linalg.norm(v))) < 1e-15
 
 
-
+def test_shortest_vector():
+    basis = np.array([[12, 11, 11],
+                      [12, 13, 12],
+                      [13, 13, 13]])
+    shortest_vector, coefficients = search_smallest_vector(basis)
+    assert np.linalg.norm(shortest_vector) == 1
