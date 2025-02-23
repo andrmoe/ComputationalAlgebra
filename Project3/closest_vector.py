@@ -1,5 +1,5 @@
 import numpy as np
-from gram_schmidt import gram_schmidt_basis
+from Project3.gram_schmidt import gram_schmidt_basis
 
 
 def rounding(basis: np.ndarray, w: np.ndarray) -> np.ndarray:

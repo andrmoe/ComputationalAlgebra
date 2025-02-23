@@ -1,4 +1,4 @@
-from gram_schmidt import gram_schmidt_basis
+from Project3.gram_schmidt import gram_schmidt_basis
 from lattice_search import search_smallest_vector
 from lll import is_size_reduced, make_size_reduced, lovasz_condition, is_delta_lll_reduced, lll
 import numpy as np

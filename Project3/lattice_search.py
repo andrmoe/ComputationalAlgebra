@@ -1,5 +1,5 @@
 import numpy as np
-from gram_schmidt import gram_schmidt_basis
+from Project3.gram_schmidt import gram_schmidt_basis
 
 
 def search_bounds(i: int, a: np.ndarray, bstar: np.ndarray, r: np.ndarray[np.float64], A: float) -> np.ndarray:
