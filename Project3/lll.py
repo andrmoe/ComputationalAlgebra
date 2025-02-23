@@ -25,3 +25,18 @@ def lovasz_condition(index: int, bstar: np.ndarray, r: np.ndarray, delta: float 
 
 def is_delta_lll_reduced(bstar: np.ndarray, r: np.ndarray, delta: float = 0.75) -> bool:
     return is_size_reduced(r) and all([lovasz_condition(i, bstar, r, delta) for i in range(r.shape[0] - 1)])
+
+
+def lll(basis: np.ndarray, delta=0.75) -> np.ndarray:
+    basis_copy = np.copy(basis)
+    while True:
+        bstar, r = gram_schmidt_basis(basis_copy)
+        reduced_r = make_size_reduced(r)
+        basis_copy = bstar.dot(reduced_r)
+        for i in range(bstar.shape[1]-2, -1, -1):
+            if not lovasz_condition(i, bstar, reduced_r, delta=delta):
+                basis_copy[:, [i, i+1]] = basis_copy[:, [i+1, i]]
+                break
+        else:
+            break
+    return basis_copy

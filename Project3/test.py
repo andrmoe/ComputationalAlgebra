@@ -1,5 +1,5 @@
 from lattice_search import gram_schmidt_basis, search_smallest_vector
-from lll import is_size_reduced, make_size_reduced, lovasz_condition, is_delta_lll_reduced
+from lll import is_size_reduced, make_size_reduced, lovasz_condition, is_delta_lll_reduced, lll
 import numpy as np
 
 
@@ -79,3 +79,20 @@ def test_is_delta_lll_reduced():
                    [0, 0, 1, -9],
                    [0, 0, 0, 1]])
     assert not is_delta_lll_reduced(bstar, r2, 0.75)
+
+
+def test_lll():
+    basis = np.array([[-4.7, 1.2, -0.2, 4.1, -9.2, 1.9, 9.4, -5.2, 3.9],
+                      [-4.3, 4., 1.4, 9.7, 9.7, -7.9, 3.9, -7.7, -5.1],
+                      [-9.7, 2.5, 8.8, 3.8, 1.4, 7.5, -6.8, -5.7, -3.5],
+                      [7.2, -3.2, 9., 8.4, 3.5, -8.2, -5.5, 3.8, 6.2],
+                      [-5.7, 5.8, -4.8, -4.4, 7.5, -6.6, 5.8, 4.8, 8.3],
+                      [-9.4, -7.5, -0.5, 5.5, -8.1, 1.3, 9., 3., -3.4],
+                      [-8., 2.3, 1.3, 6.9, 0.7, 7.3, -8.4, -3.8, -8.],
+                      [5.9, -9., -0.9, -8.5, -7.7, 0.1, 1.7, 2.7, -9.6],
+                      [-8.4, 1.7, -6.4, 9.9, 2.5, -5.3, 1., 5., -7.5]])
+    bstar, r = gram_schmidt_basis(basis)
+    assert not is_delta_lll_reduced(bstar, r, 0.75)
+    new_basis = lll(basis, 0.75)
+    new_bstar, new_r = gram_schmidt_basis(new_basis)
+    assert is_delta_lll_reduced(new_bstar, new_r, 0.75)
