@@ -1,6 +1,6 @@
 import numpy as np
 from numpy.linalg import norm
-from lattice_search import gram_schmidt_basis
+from gram_schmidt import gram_schmidt_basis
 
 
 def is_size_reduced(r: np.ndarray) -> bool:
