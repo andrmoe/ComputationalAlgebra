@@ -13,12 +13,12 @@ def search_smallest_vector(basis: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
         if i == a.shape[0] - 1:
             return range(0, int(np.ceil(A / bstar_lengths[i])))
         # TODO: Fix omitted ||b*||^2
-        radix = A**2 - np.sum(
+        radicand = A**2 - np.sum(
             r[i + 1 :, i + 1 :].dot(a[i + 1 :] * bstar_lengths[i + 1 :]) ** 2
         )
-        if radix < 0:
+        if radicand < 0:
             return range(0)
-        Ai = np.sqrt(radix) / bstar_lengths[i]
+        Ai = np.sqrt(radicand) / bstar_lengths[i]
         Mi = r[i, i + 1 :].dot(a[i + 1 :])
 
         return range(int(np.ceil(-Mi - Ai)), int(np.ceil(-Mi + Ai)))

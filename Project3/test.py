@@ -1,13 +1,8 @@
 from Project3.gram_schmidt import gram_schmidt_basis
 from lattice_search import search_smallest_vector
 from generic_search import generic_enumeration
-from lll import (
-    is_size_reduced,
-    make_size_reduced,
-    lovasz_condition,
-    is_delta_lll_reduced,
-    lll,
-)
+from lll import is_size_reduced, make_size_reduced, lovasz_condition, is_delta_lll_reduced, lll
+from closest_vector import closest_vector_enumeration
 import numpy as np
 from typing import Iterable
 
@@ -124,3 +119,21 @@ def test_generic_enumeration():
     a, score = generic_enumeration(target.shape[0], 0, search_range, score_func, 10)
     assert score == 0
     assert np.all(np.array(a) == target)
+
+def test_closest_vector_enumeration():
+    basis = np.array(
+        [
+            [-4.7, 1.2, -0.2, 4.1, -9.2, 1.9],
+            [-4.3, 4.0, 1.4, 9.7, 9.7, -7.9],
+            [-9.7, 2.5, 8.8, 3.8, 1.4, 7.5],
+            [7.2, -3.2, 9.0, 8.4, 3.5, -8.2],
+            [-5.7, 5.8, -4.8, -4.4, 7.5, -6.6],
+            [-9.4, -7.5, -0.5, 5.5, -8.1, 1.3],
+        ]
+    )
+    a = np.array([8,-3,7,0,-5,-2])
+    w = basis.dot(a) + np.array([-.03,-.03,.01,0,.045,-.09])
+    c = np.linalg.norm(basis.dot(a) - w)
+    closest_vector, coefficients = closest_vector_enumeration(basis, w)
+    d = np.linalg.norm(closest_vector - w)
+    assert np.all(a == coefficients)
