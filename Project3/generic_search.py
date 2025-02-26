@@ -1,3 +1,4 @@
+import math
 from typing import TypeVar, Callable, Iterable
 from copy import deepcopy
 
@@ -17,15 +18,15 @@ def generic_enumeration(
             return a, score_func(a)
         search_range = search_range_func(i, a, score_bound)
 
-        best_score = score_bound
+        best_score = math.inf
         best_a = []
         for ai in search_range:
             next_a = deepcopy(a)
             next_a[i] = ai
-            next_a, score = sub_search(i - 1, next_a, min(best_score, score_bound))
+            a_cand, score = sub_search(i - 1, next_a, score_bound)
             if score < best_score:
                 best_score = score
-                best_a = next_a
+                best_a = deepcopy(a_cand)
         return best_a, best_score
 
     return sub_search(n - 1, [default for _ in range(n)], initial_score_bound)
