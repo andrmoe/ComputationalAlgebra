@@ -5,6 +5,7 @@ from Project3.gram_schmidt import gram_schmidt_basis
 def search_bounds(i: int, a: np.ndarray, bstar: np.ndarray, r: np.ndarray[np.float64], A: float) -> np.ndarray:
     if i == a.shape[0] - 1:
         return np.array((0.0, A/np.linalg.norm(bstar.T[i])))
+    # TODO: Fix omitted ||b*||^2
     Ai = np.sqrt(A ** 2 - np.sum(r[i + 1:, i + 1:].dot(a[i + 1:]) ** 2)) / np.linalg.norm(bstar.T[i])
     Mi = r[i, i + 1:].dot(a[i + 1:])
 
