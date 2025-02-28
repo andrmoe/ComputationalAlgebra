@@ -26,6 +26,7 @@ def generic_enumeration(
             a_cand, score = sub_search(i - 1, next_a, score_bound)
             if score < best_score:
                 best_score = score
+                score_bound = score
                 best_a = deepcopy(a_cand)
         return best_a, best_score
 
