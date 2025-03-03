@@ -11,4 +11,4 @@ def gram_schmidt_basis(basis: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
 def orthogonality_defect(basis: np.ndarray) -> float:
     bstar, _ = gram_schmidt_basis(basis)
-    return np.prod(np.linalg.norm(basis, axis=0))/np.prod(np.linalg.norm(bstar, axis=0))
+    return np.prod(np.linalg.norm(basis, axis=0)/np.linalg.norm(bstar, axis=0))
