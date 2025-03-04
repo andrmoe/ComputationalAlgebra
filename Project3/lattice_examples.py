@@ -3,10 +3,6 @@ from gram_schmidt import orthogonality_defect
 import pickle
 
 
-lattice_examples = [
-
-]
-
 def generate_example(dim: int, max_entry: int = 1000, tries=100):
     worst_basis = np.eye(dim)
     for _ in range(tries):
