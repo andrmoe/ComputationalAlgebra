@@ -1,3 +1,5 @@
+import pickle
+
 from gram_schmidt import gram_schmidt_basis
 from lattice_search import search_smallest_vector
 from generic_search import generic_enumeration
@@ -138,3 +140,11 @@ def test_closest_vector_enumeration():
     w = basis.dot(a) + np.array([-.03,-.03,.01,0,.045,-.09, .01, .09, -.05])
     closest_vector, coefficients = closest_vector_enumeration(basis, w)
     assert np.all(a == coefficients)
+
+
+def test_lwe_examples():
+    lwe_examples = None
+    with open('lwe.pkl', 'rb') as f:
+        lwe_examples = pickle.load(f)
+    for basis, coefficients, target in lwe_examples:
+        assert np.linalg.norm(basis.dot(coefficients) - target) < np.sqrt(basis.shape[0])
