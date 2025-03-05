@@ -11,17 +11,15 @@ def search_smallest_vector(basis: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
     def search_range(i: int, a: [int], A: float) -> Iterable[int]:
         a = np.array(a)
         if i == a.shape[0] - 1:
-            return range(0, int(np.ceil(A / bstar_lengths[i])))
-        # TODO: Fix omitted ||b*||^2
-        radicand = A**2 - np.sum(
-            r[i + 1 :, i + 1 :].dot(a[i + 1 :] * bstar_lengths[i + 1 :]) ** 2
-        )
+            return range(0, int(np.floor(A / bstar_lengths[i]) + 1e-2)+1)
+        radicand = A**2 - np.sum((r[i + 1 :, i + 1 :].dot(a[i + 1 :])) ** 2 * bstar_lengths[i + 1 :] ** 2)
         if radicand < 0:
             return range(0)
         Ai = np.sqrt(radicand) / bstar_lengths[i]
         Mi = r[i, i + 1 :].dot(a[i + 1 :])
 
-        return range(int(np.ceil(-Mi - Ai)), int(np.ceil(-Mi + Ai)))
+        search_range_list = list(range(int(np.ceil(-Mi - Ai-1e-2)), int(np.floor(-Mi + Ai)+1e-2)+1))
+        return sorted(search_range_list, key=abs)
 
     def score_func(a: [int]) -> float:
         if np.allclose(a, 0):

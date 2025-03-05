@@ -66,8 +66,9 @@ def test_make_size_reduced():
 
     _, r1 = gram_schmidt_basis(basis)
     assert not is_size_reduced(r1)
-    r2 = make_size_reduced(r1)
+    r2, u = make_size_reduced(r1)
     assert is_size_reduced(r2)
+    assert np.allclose(r2, r1.dot(u))
 
 
 def test_lovasz_condition():
@@ -104,9 +105,12 @@ def test_lll():
     )
     bstar, r = gram_schmidt_basis(basis)
     assert not is_delta_lll_reduced(bstar, r, 0.75)
-    new_basis = lll(basis, 0.75)
+    new_basis, u = lll(basis, 0.75)
     new_bstar, new_r = gram_schmidt_basis(new_basis)
     assert is_delta_lll_reduced(new_bstar, new_r, 0.75)
+    assert np.allclose(new_basis, basis.dot(u))
+    assert np.allclose(u % 1, 0)
+    assert np.abs(np.linalg.det(u)) == 1
 
 
 def test_generic_enumeration():
