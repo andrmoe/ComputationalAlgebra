@@ -46,13 +46,45 @@
 
 \maketitle
 
-\section*{Task 1}
-\begin{enumerate}[a)]
+\section*{Task 1, Random Squares Factoring}
+\begin{enumerate}[]
     \item
-    Babai's rounding method estimates a closest vector by solving for the exact real coefficients and rounding them the
-    nearest integer.
-    \lstinputlisting[language=Python, caption={Babai's rounding method}, label={lst:genericenum}]{temp/func-closest_vector-rounding.py}
-    \end{enumerate}
+    The random squares method requires factoring of smaller numbers via trial division.
+    This implementation returns a list of exponents corresponding to the factors in the factor base
+    \lstinputlisting[language=Python, caption={Trial Division Factoring}, label={lst:trialdivfactoring}]
+    {temp/func-random_squares-trial_division_factoring.py}
+    \item
+    Stage 1 of the algorithm generates relations of the form:
+    \[x^2 \equiv \prod_{i=1}^s {p_i}^{e_i} \pmod{N}\]
+    The code below return a vector of random x values and a corresponding matrix of e values.
+    \lstinputlisting[language=Python, caption={Stage 1}, label={lst:randomsquaresstage1}]
+    {temp/func-random_squares-random_squares_stage_1.py}
+    \item
+    The next step is to find a non-trivial linear dependence mod 2 for the exponents.
+    The nullspace of the exponent matrix over \(\mathbb{F}_2\) is computed using galois library.
+    The first element \(\lambda\) of the nullspace is then returned along another vector fs.
+
+    fs = \(\lambda\cdot exponents / 2\).
+    These two vectors will be used to compute X and Y whose squares will be congruent mod N.
+    \lstinputlisting[language=Python, caption={Non-trivial Linear Dependence}, label={lst:lindep}]
+    {temp/func-random_squares-non_trivial_lin_dep.py}
+    \item
+    X and Y are computed as follows:
+    \[X \equiv \prod_{j=1}^{t} {x_j}^{\lambda_j} \pmod{N}, \quad Y \equiv \prod_{i=1}^{s} {p_i}^{f_i} \pmod{N}\]
+    where t = number of relations, s = size of factor base
+    \lstinputlisting[language=Python, caption={Computing the squares}, label={lst:computesquares}]
+    {temp/func-random_squares-compute_squares.py}
+    \item
+    The full algorithm uses the above functions and finally computes \(gcd(X-Y, N)\), which will hopefully be a
+    non-trivial factor of N.
+    \lstinputlisting[language=Python, caption={Full algorithm}, label={lst:randomsquaresfactoring}]
+    {temp/func-random_squares-random_squares_factoring.py}
+
+
+
+\end{enumerate}
+
+
 
 \newpage
 \begin{appendix}

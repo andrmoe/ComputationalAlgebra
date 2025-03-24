@@ -53,4 +53,4 @@ def random_squares_factoring(N: int) -> int:
     X, Y = compute_squares(N, xs, lambdas, fs, factor_base)
     return np.gcd(X-Y, N)
 
-print(random_squares_factoring(6089*7027))
+#print(random_squares_factoring(6089*7027))
