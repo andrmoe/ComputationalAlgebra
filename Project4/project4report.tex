@@ -47,9 +47,10 @@
 \maketitle
 
 \section*{Task 1, Random Squares Factoring}
-\begin{enumerate}[]
+\begin{itemize}
+    \setlength{\itemsep}{2em}
     \item
-    The random squares method requires factoring of smaller numbers via trial division.
+    The random squares method requires factoring smaller numbers via trial division.
     This implementation returns a list of exponents corresponding to the factors in the factor base
     \lstinputlisting[language=Python, caption={Trial Division Factoring}, label={lst:trialdivfactoring}]
     {temp/func-random_squares-trial_division_factoring.py}
@@ -61,7 +62,7 @@
     {temp/func-random_squares-random_squares_stage_1.py}
     \item
     The next step is to find a non-trivial linear dependence mod 2 for the exponents.
-    The nullspace of the exponent matrix over \(\mathbb{F}_2\) is computed using galois library.
+    The nullspace of the exponent matrix over \(\mathbb{F}_2\) is computed using the galois library.
     The first element \(\lambda\) of the nullspace is then returned along another vector fs.
 
     fs = \(\lambda\cdot exponents / 2\).
@@ -79,10 +80,7 @@
     non-trivial factor of N.
     \lstinputlisting[language=Python, caption={Full algorithm}, label={lst:randomsquaresfactoring}]
     {temp/func-random_squares-random_squares_factoring.py}
-
-
-
-\end{enumerate}
+\end{itemize}
 
 
 
@@ -90,6 +88,7 @@
 \begin{appendix}
 \section*{Appendix}
     Code is available at https://github.com/andrmoe/ComputationalAlgebra
+    \lstinputlisting[language=Python, caption={test.py}, label={lst:python_code1}]{random_squares.py}
     \lstinputlisting[language=Python, caption={test.py}, label={lst:python_code8}]{test.py}
 \end{appendix}
 
