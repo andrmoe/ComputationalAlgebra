@@ -2,6 +2,7 @@ from random import randint
 from small_primes import small_primes
 import numpy as np
 import galois
+from sympy import primerange
 
 
 def trial_division_factoring(N: int, factor_base: [int]) -> [int]:
@@ -46,8 +47,8 @@ def compute_squares(N: int, xs: np.ndarray, lambdas: np.ndarray, fs: np.ndarray,
 
 
 def random_squares_factoring(N: int) -> int:
-    B = min(1000, N)
-    factor_base = [prime for prime in small_primes if prime <= B]
+    B = min(10000, N)
+    factor_base = list(primerange(0, B))
     xs, exponent_matrix = random_squares_stage_1(N, factor_base)
     lambdas, fs = non_trivial_lin_dep(exponent_matrix)
     X, Y = compute_squares(N, xs, lambdas, fs, factor_base)
