@@ -1,5 +1,4 @@
 from random import randint
-from small_primes import small_primes
 import numpy as np
 import galois
 from sympy import primerange

@@ -2,7 +2,6 @@ import math
 
 import numpy as np
 
-from small_primes import small_primes
 from sympy.ntheory.residue_ntheory import sqrt_mod_iter
 from sympy import primerange
 from random_squares import non_trivial_lin_dep, compute_squares
