@@ -1,6 +1,6 @@
 
 # This was extracted from John Brillhart and J. L. Selfridge. Some factorizations of 2n ±1 and related results. Mathematics of Computation, 21(97):87–96, 1967.
-# using Claude 3.7 Sonnet (Reasoning). There mey be errors
+# using Claude 3.7 Sonnet (Reasoning). There might be errors
 factorizations = {
     "2^103 + 1": "3 : 41514163019381427670817717261711",
     "2^109 - 1": "5 : 74323515777853174651885214034553",

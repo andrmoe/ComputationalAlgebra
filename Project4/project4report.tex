@@ -82,14 +82,52 @@
     {temp/func-random_squares-random_squares_factoring.py}
 \end{itemize}
 
+\section*{Task 2a, Quadratic Sieve}
 
+The quadratic sieve is a faster way to find relations.
+This implementation takes in a factor base, N and a sieve size.
+The sieve is generated from square numbers mod N, close to zero.
+It then uses the  sympy.ntheory.residue\_ntheory library to calculate the solutions to \(x^2 \equiv N \pmod{p}\) for
+each p in the factor base.
+These solutions are then used as the basis for the sieve process, where the sieve element at each multiple of p are
+divided by p.
+And the corresponding entries in the exponent matrix are incremented.
+Unfortunately, this means that prime powers can't be factored, which severely limits the performance of this
+implementation.
+
+Finally, the algorithm filters out number that still have remaining factors.
+
+\lstinputlisting[language=Python, caption={Quadratic Sieve}, label={lst:quadraticsieve}]
+{temp/func-quadratic_sieve-quadratic_sieve.py}
+
+This factoring algorithm uses the quadratic sieve and the functions from task 1 to factor an integer N.
+
+\lstinputlisting[language=Python, caption={Quadratic Sieve Factoring}, label={lst:quadraticsievefactoring}]
+{temp/func-quadratic_sieve-quadratic_sieve_factoring.py}
+
+\section*{Task 4}
+
+I tried to redo the factorisations from Brillhart and Selfridge\cite{brillhartselfridge}, but even the first example
+was too large for my implementation.
 
 \newpage
 \begin{appendix}
 \section*{Appendix}
     Code is available at https://github.com/andrmoe/ComputationalAlgebra
-    \lstinputlisting[language=Python, caption={test.py}, label={lst:python_code1}]{random_squares.py}
-    \lstinputlisting[language=Python, caption={test.py}, label={lst:python_code8}]{test.py}
+    \lstinputlisting[language=Python, caption={random\_squares.py}, label={lst:python_code1}]{random_squares.py}
+    \lstinputlisting[language=Python, caption={quadratic\_sieve.py}, label={lst:python_code2}]{quadratic_sieve.py}
+    \lstinputlisting[language=Python, caption={examples\_brillhart\_and\_selfridge.py}, label={lst:python_code3}]{examples_brillhart_and_selfridge.py}
+    \lstinputlisting[language=Python, caption={experiment.py}, label={lst:python_code4}]{experiment.py}
+    \lstinputlisting[language=Python, caption={test.py}, label={lst:python_code5}]{test.py}
 \end{appendix}
+
+
+\begin{thebibliography}{1}
+
+\bibitem{brillhartselfridge}
+John Brillhart, J. L. Selfridge, ``Some factorizations of 2n ±1 and related results,'' \textit{Mathematics of Computation}, vol. 21, no. 97, pp. 87--96, 1967.
+
+\end{thebibliography}
+
 
 \end{document}

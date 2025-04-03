@@ -1,9 +1,7 @@
 import math
 
 import numpy as np
-
-from sympy.ntheory.residue_ntheory import sqrt_mod_iter
-from sympy import primerange
+import sympy
 from random_squares import non_trivial_lin_dep, compute_squares
 
 
@@ -12,7 +10,7 @@ def eulers_criterion(a: int, p: int) -> bool:
 
 
 def generate_factor_base(smoothness_bound: int, N: int) -> [int]:
-    return [prime for prime in primerange(0, smoothness_bound) if eulers_criterion(N, prime)]
+    return [prime for prime in sympy.primerange(0, smoothness_bound) if pow(N, (prime-1)//2, prime) == 1]
 
 
 def quadratic_sieve(factor_base: [int], N: int, sieve_size: int) -> [tuple[int, dict[int, int]]]:
@@ -21,7 +19,7 @@ def quadratic_sieve(factor_base: [int], N: int, sieve_size: int) -> [tuple[int, 
     exponents = [[0 for _ in factor_base] for _ in range(sieve_size)]
 
     for i, p in enumerate(factor_base):
-        for solution in sqrt_mod_iter(N, p):
+        for solution in sympy.ntheory.residue_ntheory.sqrt_mod_iter(N, p):
             index = solution - root
             if index >= sieve_size:
                 break
@@ -35,8 +33,8 @@ def quadratic_sieve(factor_base: [int], N: int, sieve_size: int) -> [tuple[int, 
 
 
 def quadratic_sieve_factoring(N: int) -> int:
-    B = int(math.exp(0.5*math.sqrt(math.log(N)*math.log(math.log(N)))))
-    factor_base = generate_factor_base(B, N)
+    B = int(math.log(N))
+    factor_base = [prime for prime in sympy.primerange(0, B) if pow(N, (prime-1)//2, prime) == 1]
     xs, exponent_matrix = zip(*quadratic_sieve(factor_base, N, 100*len(factor_base)))
     exponent_matrix = np.array(exponent_matrix)
     lambdas, fs = non_trivial_lin_dep(exponent_matrix)
