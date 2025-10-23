@@ -4,3 +4,5 @@ pandas
 doit
 pytest
 jinja2
+galois
+sympy
